@@ -221,7 +221,6 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
     final toolbar = ZefyrToolbarScaffold(
       key: _toolbarKey,
       body: ZefyrButtonList(buttons: _buildButtons(context)),
-      trailing: buildButton(context, ZefyrToolbarAction.hideKeyboard),
     );
 
     layers.add(toolbar);
@@ -253,13 +252,10 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
       buildButton(context, ZefyrToolbarAction.bold),
       buildButton(context, ZefyrToolbarAction.italic),
       LinkButton(),
+      if (editor.imageDelegate != null) ImageButton(),
       HeadingButton(),
       buildButton(context, ZefyrToolbarAction.bulletList),
-      buildButton(context, ZefyrToolbarAction.numberList),
-      buildButton(context, ZefyrToolbarAction.quote),
-      buildButton(context, ZefyrToolbarAction.code),
       buildButton(context, ZefyrToolbarAction.horizontalRule),
-      if (editor.imageDelegate != null) ImageButton(),
     ];
     return buttons;
   }
@@ -300,25 +296,9 @@ class _ZefyrButtonListState extends State<ZefyrButtonList> {
       physics: ClampingScrollPhysics(),
     );
 
-    final leftArrow = _showLeftArrow
-        ? Icon(Icons.arrow_left, size: 18.0, color: color)
-        : null;
-    final rightArrow = _showRightArrow
-        ? Icon(Icons.arrow_right, size: 18.0, color: color)
-        : null;
     return Row(
       children: <Widget>[
-        SizedBox(
-          width: 12.0,
-          height: ZefyrToolbar.kToolbarHeight,
-          child: Container(child: leftArrow, color: theme.color),
-        ),
         Expanded(child: ClipRect(child: list)),
-        SizedBox(
-          width: 12.0,
-          height: ZefyrToolbar.kToolbarHeight,
-          child: Container(child: rightArrow, color: theme.color),
-        ),
       ],
     );
   }
