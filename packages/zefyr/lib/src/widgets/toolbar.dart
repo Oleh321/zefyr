@@ -221,6 +221,7 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
     final toolbar = ZefyrToolbarScaffold(
       key: _toolbarKey,
       body: ZefyrButtonList(buttons: _buildButtons(context)),
+      trailing: buildButton(context, ZefyrToolbarAction.hideKeyboard),
     );
 
     layers.add(toolbar);

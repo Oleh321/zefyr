@@ -564,3 +564,27 @@ class ToolbarTheme {
   int get hashCode =>
       hashValues(color, toggleColor, iconColor, disabledIconColor);
 }
+
+class CustomTheme {
+  static final CustomTheme _singleton = CustomTheme._internal();
+  CustomThemeData customThemeData;
+
+  factory CustomTheme(){
+    return _singleton;
+  }
+
+  CustomTheme._internal(){
+    customThemeData = CustomThemeData();
+  }
+
+}
+
+class CustomThemeData {
+  Color backgroundToolbar;
+  Color iconToolbar;
+  Color selectedIconToolbar;
+
+  // Todo: here is should be custom theme
+
+}
+

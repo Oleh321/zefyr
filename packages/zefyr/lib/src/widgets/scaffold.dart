@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:zefyr/src/widgets/theme.dart';
 
 import 'editor.dart';
 
 /// Provides necessary layout for [ZefyrEditor].
 class ZefyrScaffold extends StatefulWidget {
   final Widget child;
+  final CustomThemeData customThemeData;
 
-  const ZefyrScaffold({Key key, this.child}) : super(key: key);
+  ZefyrScaffold({Key key, this.child, this.customThemeData}) : super(key: key){
+    if(customThemeData != null){
+      CustomTheme().customThemeData = customThemeData;
+    }
+  }
 
   static ZefyrScaffoldState of(BuildContext context) {
     final _ZefyrScaffoldAccess widget =
