@@ -62,6 +62,11 @@ abstract class ZefyrToolbarDelegate {
 
 /// Scaffold for [ZefyrToolbar].
 class ZefyrToolbarScaffold extends StatelessWidget {
+
+
+//  CustomThemeData customTheme = CustomTheme().customThemeData;
+
+
   const ZefyrToolbarScaffold({
     Key key,
     @required this.body,
@@ -75,6 +80,7 @@ class ZefyrToolbarScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CustomThemeData customTheme = CustomTheme().customThemeData;
     final theme = ZefyrTheme.of(context).toolbarTheme;
     final toolbar = ZefyrToolbar.of(context);
     final constraints =
@@ -90,7 +96,7 @@ class ZefyrToolbarScaffold extends StatelessWidget {
     }
     return Container(
       constraints: constraints,
-      child: Material(color: theme.color, child: Row(children: children)),
+      child: Material(color: customTheme.toolbarColor ?? theme.color, child: Row(children: children)),
     );
   }
 }
@@ -366,7 +372,7 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
       final text = kDefaultButtonTexts[action];
       assert(text != null);
       final style = theme.textTheme.caption
-          .copyWith(fontWeight: FontWeight.bold, fontSize: 14.0);
+          .copyWith(fontWeight: FontWeight.bold, fontSize: 14.0, color: CustomTheme().customThemeData.iconToolbarColor);
       return ZefyrButton.text(
         action: action,
         text: text,

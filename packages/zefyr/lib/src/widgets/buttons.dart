@@ -64,13 +64,16 @@ class ZefyrButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final customTheme = CustomTheme().customThemeData;
+
     final toolbar = ZefyrToolbar.of(context);
     final editor = toolbar.editor;
     final toolbarTheme = ZefyrTheme.of(context).toolbarTheme;
     final pressedHandler = _getPressedHandler(editor, toolbar);
     final iconColor = (pressedHandler == null)
-        ? toolbarTheme.disabledIconColor
-        : toolbarTheme.iconColor;
+        ? customTheme.disabledIconToolbarColor ?? toolbarTheme.disabledIconColor
+        : customTheme.iconToolbarColor ?? toolbarTheme.iconColor;
     if (_icon != null) {
       return RawZefyrButton.icon(
         action: action,
@@ -83,7 +86,7 @@ class ZefyrButton extends StatelessWidget {
     } else {
       assert(_text != null);
       var style = _textStyle ?? TextStyle();
-      style = style.copyWith(color: iconColor);
+      style = style.copyWith(color: customTheme.iconToolbarColor ?? iconColor);
       return RawZefyrButton(
         action: action,
         child: Text(_text, style: style),
@@ -94,12 +97,15 @@ class ZefyrButton extends StatelessWidget {
   }
 
   Color _getColor(ZefyrScope editor, ToolbarTheme theme) {
+
+    final customTheme = CustomTheme().customThemeData;
+
     if (isAttributeAction) {
       final attribute = kZefyrToolbarAttributeActions[action];
       final isToggled = (attribute is NotusAttribute)
           ? editor.selectionStyle.containsSame(attribute)
           : editor.selectionStyle.contains(attribute);
-      return isToggled ? theme.toggleColor : null;
+      return isToggled ?(customTheme.selectedBackgroundIconToolbarColor) : null;
     }
     return null;
   }
@@ -453,11 +459,6 @@ class _LinkButtonState extends State<LinkButton> {
             onPressed: unlinkHandler),
         toolbar.buildButton(context, ZefyrToolbarAction.clipboardCopy,
             onPressed: copyHandler),
-        toolbar.buildButton(
-          context,
-          ZefyrToolbarAction.openInBrowser,
-          onPressed: openHandler,
-        ),
       ];
       items.addAll(buttons);
     }
@@ -523,10 +524,13 @@ class _LinkInputState extends State<_LinkInput> {
 
   @override
   Widget build(BuildContext context) {
+
+    final customTheme = CustomTheme().customThemeData;
+
     final theme = Theme.of(context);
     final toolbarTheme = ZefyrTheme.of(context).toolbarTheme;
     final color =
-        widget.formatError ? Colors.redAccent : toolbarTheme.iconColor;
+        widget.formatError ? Colors.redAccent : customTheme.iconToolbarColor ?? toolbarTheme.iconColor;
     final style = theme.textTheme.subtitle1.copyWith(color: color);
     return TextField(
       style: style,
@@ -537,7 +541,7 @@ class _LinkInputState extends State<_LinkInput> {
       decoration: InputDecoration(
         hintText: 'https://',
         filled: true,
-        fillColor: toolbarTheme.color,
+        fillColor: customTheme.toolbarColor ?? toolbarTheme.color,
         border: InputBorder.none,
         contentPadding: const EdgeInsets.all(10.0),
       ),
@@ -553,6 +557,9 @@ class _LinkView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final customTheme = CustomTheme().customThemeData;
+
     final theme = Theme.of(context);
     final toolbarTheme = ZefyrTheme.of(context).toolbarTheme;
     Widget widget = ClipRect(
@@ -568,7 +575,7 @@ class _LinkView extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.subtitle1
-                  .copyWith(color: toolbarTheme.disabledIconColor),
+                  .copyWith(color: customTheme.iconToolbarColor ?? toolbarTheme.disabledIconColor),
             ),
           )
         ],

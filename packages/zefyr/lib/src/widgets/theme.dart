@@ -576,13 +576,19 @@ class CustomTheme {
   CustomTheme._internal(){
     customThemeData = CustomThemeData();
   }
-
 }
 
 class CustomThemeData {
-  Color backgroundToolbar;
-  Color iconToolbar;
-  Color selectedIconToolbar;
+  Color toolbarColor;
+  Color iconToolbarColor;
+  Color disabledIconToolbarColor;
+  Color selectedBackgroundIconToolbarColor;
+
+  CustomThemeData({
+    this.toolbarColor,
+    this.iconToolbarColor,
+    this.disabledIconToolbarColor,
+    this.selectedBackgroundIconToolbarColor});
 
   // Todo: here is should be custom theme
 
